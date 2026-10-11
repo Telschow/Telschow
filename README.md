@@ -64,7 +64,7 @@ A personal agent for the German rental market. An LLM writes one or two sentence
 
 * **Decisions get written down.** Trade-offs go into ADRs with an exit test, so a team can disagree with a decision for the right reasons months later.
 * **Claims are earned by measurement.** Numbers in docs are generated and checked in CI. Negative results stay in the headline, and so do the misses in a validation report.
-* **I test with users early and publish what failed.** The first console version did not work for the two people I tested it with,.
+* **I test with users early and publish what failed.** The first console version did not work for the two people I tested it with.
 * **AI-assisted engineering with gates, not trust.** Most of the code in these repos is written by an AI coding agent, and each README says so. I set scope and requirements, make the decisions, review and merge. Verification keeps it correct: property tests, finite-difference checks on Jacobians, golden snapshots, coverage ratchets, held-out protocols fixed before the runs, and security scans.
 * **Safety and scope are part of the design.** Human-on-the-loop by default, one approval gate with a test, documented non-goals, and a clear line on what a system must not do.
 * **Product and engineering together.** I work from the problem and the decision it supports down to the implementation, not the other way round.
