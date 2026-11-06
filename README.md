@@ -4,6 +4,8 @@
 
 I build products where a wrong answer has a cost: a drone that must know when its position is wrong, an operator who must know what to do about it, and AI agents that must not act without a human saying yes. I make that kind of system measurable, auditable and shippable, and I lead the engineers who build it.
 
+**The question behind my projects:** when does adding a sensor, a camera or an AI component make a system worse, and does the system know it?
+
 [LinkedIn](https://linkedin.com/in/dtelschow) · [Featured work](#featured-work) · [How I lead](#how-i-lead-technical-work)
 
 ---
@@ -20,6 +22,7 @@ Human-on-the-loop mission control for a small team of simulated drones (PX4 SITL
 * With one of three vehicles lost, area covered was 100% when the operator approved the re-task and 87% when denied
 * Held-out validation with a protocol committed before the runs: 7 of 8 expectations met, and the miss is reported, not excluded
 * Usability test with two people: neither acted on the decision unaided. I redesigned the console and published the finding. The redesign is not yet re-tested, and round 2 is planned.
+* A lost-link contingency is partly built, in simulation only: the operator approves LAND before the mission, the vehicle may act on nothing else, and 3 of 3 recorded runs behaved that way ([ADR 0004](https://github.com/Telschow/nav-trust-c2/blob/main/docs/adr/0004-authority-under-lost-link.md))
 * Security hardening of the C2 backend: cross-site browser requests are refused, and a decision that names no operator is refused
 * Simulation only, search-and-rescue framing, no weapons, targeting or effectors, with the guardrails written into the repo
 
@@ -33,13 +36,25 @@ With GNSS denied and camera-based motion tracking switched on, the filter claims
 
 **I retracted my own earlier result.** The project first reported that vision made the position better. Then I found the benchmark started every run from the same fixed offset from the truth, which the filter's own prior did not describe. I wrote down the fix ([ADR-0027](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0027-how-the-synthetic-runs-are-initialised.md)) before regenerating any number. After the fix the accuracy gain did not survive: vision was less accurate than no vision in 9 of 10 seeds (measured once, not checked by CI).
 
-**The bar for shipping vision is pre-registered.** The gate ([ADR-0028](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0028-the-b1-gate.md), [ADR-0030](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0030-the-gate-for-the-next-visual-update-candidate.md)) fixes thresholds, scenarios and held-out seed blocks before a candidate is evaluated, and a failure is recorded as a result. A stochastic clone fixes independent visual errors but needs inflated noise against the errors measured on a real front end ([ADR-0023](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0023-clone-against-a-measured-front-end.md)). An adaptive noise scale is the next candidate. The gate has not been passed, so the default is unchanged.
+**The bar for shipping vision was pre-registered, and I stopped when it was not met.** The gate ([ADR-0028](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0028-the-b1-gate.md), [ADR-0030](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0030-the-gate-for-the-next-visual-update-candidate.md)) fixed thresholds, scenarios and held-out seed blocks before any candidate was evaluated. The first candidate failed the held-out gate. A stochastic clone passes when visual errors are independent and fails when they are correlated. An adaptive noise scale and a Gauss-Markov error model each failed on development seeds. I then closed the question as **characterised, not solved** and stopped building candidates ([ADR-0036](https://github.com/Telschow/contested-nav/blob/main/docs/adr/0036-b1-is-closed-as-characterised-not-solved.md)). The default is unchanged.
 
-* 2,000+ tests, 94% line coverage, 32 architecture decision records, golden-snapshot benchmark, CI on 3 Python versions and 3 operating systems, CodeQL and secret scanning
+* 2,700+ tests, 95% line coverage, 42 architecture decision records, golden-snapshot benchmark, CI on 3 Python versions and 3 operating systems, CodeQL and secret scanning
 * Tables in its README are generated, and CI fails if a cell disagrees with the code
-* Headline benchmark is synthetic, extended to recorded EuRoC and TUM VI IMU data with GNSS still simulated. Not field validated, not flight-ready, and it says so.
+* Headline benchmark is synthetic. It is extended to recorded EuRoC and TUM VI IMU data with GNSS simulated, and to UrbanNav with the receiver's own GNSS fixes. Not field validated, not flight-ready, and it says so.
 
 `ESKF` · `GNSS-denied navigation` · `FDIR / spoofing detection` · `NEES / calibration` · `visual odometry` · `Python`
+
+### [mosaic-perception](https://github.com/Telschow/mosaic-perception): when does fusing sensors make tracking worse?
+
+A deterministic workbench for multi-sensor object tracking. Three methods run on the same synthetic worlds and random streams: a range-bearing sensor alone, the same plus a camera-like bearing sensor, and a third that also estimates and removes the camera's bearing bias. Comparisons are paired, so differences are not luck of the draw. [Project site](https://telschow.github.io/mosaic-perception/) with a 44-second explainer.
+
+* Adding the camera made precision, MOTA and GOSPA worse in 14 of 16 scenarios (25 paired seeds, corrected for multiple comparisons). Position error was inconclusive.
+* Position uncertainty was overconfident in 28 of 30 scenario-method pairs
+* An ablation shows the losses largely vanish when the camera may not refresh tracks the range sensor missed. So it is a property of this tracker design, not of fusion in general.
+* Reserved seeds were run once and frozen, and the README says that run is a historical result and not a generalisation claim. The best-case hero figure is labelled as best case.
+* 360+ tests, CI that regenerates a benchmark and compares it with committed golden files, artifact provenance checks, secret scan. All synthetic.
+
+`multi-target tracking` · `sensor fusion` · `EKF / Hungarian association` · `GOSPA / MOTA / NEES` · `reproducible benchmarks` · `Python / Streamlit`
 
 ### [personal-ai](https://github.com/Telschow/personal-ai): a local-first agent platform with a hard approval boundary
 
@@ -73,7 +88,7 @@ A personal agent for the German rental market. An LLM writes one or two sentence
 
 Tech lead or staff-level roles in **autonomous driving, robotics, defense-tech and applied AI**, especially on:
 
-* State estimation, sensor fusion, and degraded-sensor behaviour (GNSS denial, spoofing, fault handling)
+* State estimation, sensor fusion and tracking, and degraded-sensor behaviour (GNSS denial, spoofing, fault handling)
 * Trust, integrity and human oversight for systems that decide on their own
 * Evaluation and safety cases with ground truth, held-out protocols and honest uncertainty
 * Agent and LLM systems that need auditability, policy control and human approval
@@ -82,7 +97,7 @@ Tech lead or staff-level roles in **autonomous driving, robotics, defense-tech a
 ## Stack
 
 **Languages:** Python (primary), TypeScript
-**Estimation & robotics:** ESKF, IMU/GNSS/visual fusion, FDIR, NEES/NIS consistency checks, PX4 SITL, Gazebo, MAVSDK
+**Estimation & robotics:** ESKF, IMU/GNSS/visual fusion, multi-target tracking, FDIR, NEES/NIS consistency checks, PX4 SITL, Gazebo, MAVSDK
 **AI:** RAG, hybrid retrieval, agent loops and tool use, evaluation harnesses, Ollama, MCP
 **Engineering:** pytest, property-based testing, FastAPI, React, GitHub Actions, CodeQL, uv, Docker, MkDocs, ADRs
 
