@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 250" role="img" aria-label="Banner: Daniel Telschow. Autonomy and applied AI. Systems that know when they are wrong.">
+  <rect width="1000" height="250" rx="8" fill="#0b1018"/>
+  <g stroke="#1a2332" stroke-width="1"><path d="M0 62H1000M0 125H1000M0 188H1000M125 0V250M250 0V250M375 0V250M500 0V250M625 0V250M750 0V250M875 0V250"/></g>
+  <text x="44" y="96" fill="#ffffff" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="44" font-weight="600">Daniel Telschow</text>
+  <text x="44" y="136" fill="#b4bdca" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="18">Autonomy and applied AI. Systems that know when they are wrong.</text>
+  <text x="44" y="196" fill="#7f8a9a" font-family="SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="14">TECH LEAD  ·  SENSOR FUSION  ·  HUMAN-ON-THE-LOOP  ·  MUNICH</text>
+  <g font-family="SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="13">
+    <rect x="700" y="46" width="256" height="40" rx="5" fill="#101a26" stroke="#2a3a4d"/><circle cx="722" cy="66" r="6" fill="#3ecf8e"/><text x="740" y="71" fill="#e7eaef">uav1</text><text x="935" y="71" fill="#3ecf8e" text-anchor="end">TRUSTED</text>
+    <rect x="700" y="96" width="256" height="40" rx="5" fill="#2a1416" stroke="#8a2e33"/><circle cx="722" cy="116" r="6" fill="#ff5b5b"/><text x="740" y="121" fill="#ffffff">uav2</text><text x="935" y="121" fill="#ff7a7a" text-anchor="end">NOT TRUSTED</text>
+    <rect x="700" y="146" width="256" height="40" rx="5" fill="#101a26" stroke="#2a3a4d"/><circle cx="722" cy="166" r="6" fill="#3ecf8e"/><text x="740" y="171" fill="#e7eaef">uav3</text><text x="935" y="171" fill="#3ecf8e" text-anchor="end">TRUSTED</text>
+  </g>
+  <text x="956" y="214" fill="#7f8a9a" text-anchor="end" font-family="SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="11">illustrative, after the nav-trust-c2 console</text>
+</svg>
