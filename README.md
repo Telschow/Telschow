@@ -46,8 +46,6 @@ All results come from simulation or synthetic data, and each project says so.
   </tr>
 </table>
 
-**Also:** [personal-ai](https://github.com/Telschow/personal-ai), a local-first agent platform where every tool call passes a policy engine that can require human approval, and [mia-san-miete](https://github.com/Telschow/mia-san-miete), a rental-search assistant that keeps an LLM inside an allow-list of facts and sends nothing by default.
-
 ## How I work
 
 * **Decisions are written down** as architecture decision records, so a team can disagree with them for the right reasons later.
